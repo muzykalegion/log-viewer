@@ -72,7 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
 
-    filepath = args.filepath if args.filepath else 'LOGS/15.05.24/flight10.log'
+    filepath = args.filepath if args.filepath else 'LOGS/28.05.24/1.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
     fig, ax = plt.subplots(3, 1)
