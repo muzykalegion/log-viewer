@@ -19,11 +19,11 @@ class Checker:
         self.TAKEOFF_LIST.pop(0)
         print(self.TAKEOFF_LIST)
 
-    def check(self):
-        newBaroAltOffsetCm = 0
-        for i in np.arange(0.0, 1.0, 0.1):
-            newBaroAltOffsetCm = 0.2 * i + 0.8 * newBaroAltOffsetCm
-            print(newBaroAltOffsetCm)
+    def scaleRange(self, x, srcMin, srcMax, destMin, destMax):
+        a = (destMax - destMin) * (x - srcMin)
+        b = srcMax - srcMin
+        print((a / b) + destMin)
+
 
 
 class Thread1(Thread):
@@ -53,12 +53,12 @@ class Thread2(Thread):
 
 
 if __name__ == '__main__':
-    val='temp=52.1\'C'
-    print(f'{val[5:-2]}')
     # pipe = Pipe()
     # thread1 = Thread1(pipe)
     # thread1.start()
     # thread2 = Thread2(pipe)
     # thread2.start()
-    # checker = Checker()
-    # checker.check()
+    checker = Checker()
+    checker.scaleRange(-510,0,490,0,500)
+
+

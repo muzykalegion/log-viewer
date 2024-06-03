@@ -21,7 +21,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     ZERO_ALT = 'ALT:  0.0' if isOldFile(filename) else 'ALT: 0.0'
     TIMESTAMP_FORMAT = '%HH:%MM:%SS' if isOldFile(filename) else '%H:%M:%S.%f'
 
-    with open(filename, 'r+') as file:
+    with open(filename, 'r+', errors='ignore') as file:
         for line in file:
             if ZERO_ALT in line:
                 break
@@ -46,9 +46,13 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                         time_array.pop()
                         alt_array.pop()
                         break
-                chs = ast.literal_eval(nextLine) if nextLine.startswith('[') else [0, 0, 988]
-                throttle_array.append(chs[2])
-                pitch_array.append(chs[1])
+                if nextLine.startswith('['):
+                    chs = ast.literal_eval(nextLine)
+                    throttle_array.append(chs[2])
+                    pitch_array.append(chs[1])
+                else:
+                    time_array.pop()
+                    alt_array.pop()
 
     print(time_array)
     print(alt_array)
@@ -72,7 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
 
-    filepath = args.filepath if args.filepath else 'LOGS/01.06.24/2.log'
+    filepath = args.filepath if args.filepath else 'LOGS/03.06.24/2.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
     fig, ax = plt.subplots(3, 1)
