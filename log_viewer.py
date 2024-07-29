@@ -75,11 +75,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-
-    filepath = args.filepath if args.filepath else 'LOGS/03.06.24/2.log'
+    filepath = args.filepath if args.filepath else 'LOGS/15.06.24/10.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
-    fig, ax = plt.subplots(3, 1)
+    number_of_plots = 3
+    fig, ax = plt.subplots(number_of_plots, 1)
     mtimes = mdates.date2num(times)
 
     ax[0].plot(mtimes, throttles, '-g')
