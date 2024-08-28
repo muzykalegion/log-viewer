@@ -1,5 +1,7 @@
 import struct
 import socket
+import matplotlib.pyplot as plt
+import numpy as np
 
 # ---------------   LIFTOFF DRONE TELEMETRY ----------------
 #
@@ -32,12 +34,17 @@ initX = initY = initZ = None
 while True:
     data, addr = sock.recvfrom(BYTES)  # buffer size in bytes
     values = struct.unpack(SFORMAT, data)
+    print(values)
     t, pX, pY, pZ, aX, aY, aZ, aW, gX, gY, gZ, i1, i2, i3, i4 = values
     if None in (initX, initY, initZ):
         initX = pX
         initY = pY
         initZ = pZ
-    print(f'Position {pX - initX} {pY - initY} {pZ - initZ}')
-    print(f'{i1} {i2} {i3} {i4}')
+    # print(f'Position {pX - initX} {pY - initY} {pZ - initZ}')
+    # print(f'Gyro {gX} {gY} {gZ}')
+    # print(f'{i1} {i2} {i3} {i4}')
+
+
+
 
 

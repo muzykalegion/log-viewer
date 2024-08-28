@@ -75,33 +75,34 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    filepath = args.filepath if args.filepath else 'LOGS/15.06.24/10.log'
+    filepath = args.filepath if args.filepath else 'LOGS/board/2024-08-24--13-07-25.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
-    number_of_plots = 3
-    fig, ax = plt.subplots(number_of_plots, 1)
+    number_of_plots = 2
+    fig, ax = plt.subplots(number_of_plots, 1, sharex=True)
     mtimes = mdates.date2num(times)
 
     ax[0].plot(mtimes, throttles, '-g')
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
+    ax[0].set_ylim(988, 1500)
 
     ax[1].plot(mtimes, alts, ':b')
     ax[1].legend(['Altitude'])
-    ax[1].set_ylim(-2, 25)
+    ax[1].set_ylim(-0.5, 10)
 
-    ax[2].plot(mtimes, pitches, ':c')
-    ax[2].legend(['Pitch'])
+    # ax[2].plot(mtimes, pitches, ':c')
+    # ax[2].legend(['Pitch'])
 
-    sec_loc = matplotlib.dates.SecondLocator(interval=5)
+    sec_loc = matplotlib.dates.SecondLocator(interval=1)
     sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
 
     ax[0].xaxis.set_major_locator(sec_loc)
     ax[0].xaxis.set_major_formatter(sec_formatter)
     ax[1].xaxis.set_major_locator(sec_loc)
     ax[1].xaxis.set_major_formatter(sec_formatter)
-    ax[2].xaxis.set_major_locator(sec_loc)
-    ax[2].xaxis.set_major_formatter(sec_formatter)
+    # ax[2].xaxis.set_major_locator(sec_loc)
+    # ax[2].xaxis.set_major_formatter(sec_formatter)
     plt.gcf().autofmt_xdate(rotation=90)
     plt.title(filepath, x=0.1, y=3.5)
     plt.show()
