@@ -1,0 +1,4 @@
+Easycap format used: ImageFormat(type=<BufType.VIDEO_CAPTURE: 1>, description='YUYV 4:2:2', flags=<ImageFormatFlag.0: 0>, pixel_format=<PixelFormat.YUYV: 1448695129>)
+Initialize navigation params:
+Delay=0.1, α=0.85, β=0.005, Kp=10
+Starting Main workflow
