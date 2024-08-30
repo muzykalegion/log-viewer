@@ -1,0 +1,41 @@
+Waiting for MSP_API_VERSION reply...
+Waiting for MSP_FC_VARIANT reply...
+{'apiVersion': '1.44.0', 'flightControllerIdentifier': 'BTFL', 'flightControllerVersion': '4.3.2', 'version': 0, 'buildInfo': 'Nov 28 2022 07:26:30', 'multiType': 0, 'msp_version': 0, 'capability': 0, 'cycleTime': 313, 'i2cError': 0, 'activeSensors': 35, 'mode': 2, 'profile': 0, 'uid': [3145761, 858867466, 875836466], 'accelerometerTrims': [0, 0], 'name': '', 'displayName': 'BOARD MODULE', 'numProfiles': 3, 'rateProfile': 0, 'boardType': 2, 'armingDisableCount': 26, 'armingDisableFlags': 4, 'armingDisabled': False, 'runawayTakeoffPreventionDisabled': False, 'boardIdentifier': 'S405', 'boardVersion': 0, 'commCapabilities': 55, 'targetName': 'STM32F405', 'boardName': 'SPEEDYBEEF405V3', 'manufacturerId': 'SPBE', 'signature': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'cpuload': 21, 'mcuTypeId': 3, 'mspProtocolVersion': 0, 'flightModeFlags': []}
+14:57:48.399435 ALT: 2.94
+14:57:48.414428 ALT: 2.94
+14:57:48.430344 ALT: 2.94
+14:57:48.446349 ALT: 2.94
+14:57:48.462342 ALT: 2.94
+14:57:48.478363 ALT: 2.94
+14:57:48.494399 ALT: 2.94
+14:57:48.510377 ALT: 2.94
+14:57:48.526464 ALT: 2.94
+14:57:48.542359 ALT: 2.94
+14:57:48.558413 ALT: 2.94
+14:57:48.574417 ALT: 2.94
+14:57:48.590377 ALT: 2.94
+14:57:48.607128 ALT: 2.94
+14:57:48.622388 ALT: 2.94
+14:57:48.640301 ALT: 2.94
+14:57:48.654404 ALT: 2.94
+Easycap format used: ImageFormat(type=<BufType.VIDEO_CAPTURE: 1>, description='YUYV 4:2:2', flags=<ImageFormatFlag.0: 0>, pixel_format=<PixelFormat.YUYV: 1448695129>)
+14:57:48.686751 ALT: 2.94
+14:57:48.702578 ALT: 2.94
+14:57:48.718467 ALT: 2.94
+14:57:48.734498 ALT: 2.94
+14:57:48.751003 ALT: 2.94
+14:57:48.766468 ALT: 2.94
+14:57:48.782411 ALT: 2.94
+14:57:48.798446 ALT: 2.94
+14:57:48.814414 ALT: 2.91
+14:57:48.830409 ALT: 2.89
+14:57:48.846423 ALT: 2.89
+14:57:48.862980 ALT: 2.88
+14:57:48.878637 ALT: 2.87
+14:57:48.894598 ALT: 2.87
+14:57:48.910897 ALT: 2.87
+14:57:48.928694 ALT: 2.87
+14:57:48.946286 ALT: 2.87
+Initialize navigation params:
+Delay=0.05, α=0.85, β=0.005, Kp=50
+Starting Main workflow

@@ -75,7 +75,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    filepath = args.filepath if args.filepath else 'LOGS/board/2024-08-30--14-23-26.log'
+    filepath = args.filepath if args.filepath else 'LOGS/board/2024-08-30--14-49-15.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
     number_of_plots = 2
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     ax[0].plot(mtimes, throttles, '-g')
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
-    ax[0].set_ylim(988, 1500)
+    ax[0].set_ylim(988, 1700)
 
     ax[1].plot(mtimes, alts, ':b')
     ax[1].legend(['Altitude'])
