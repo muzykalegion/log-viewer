@@ -75,7 +75,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    filepath = args.filepath if args.filepath else 'LOGS/board/2024-08-30--15-23-59.log'
+    log_name = '2024-09-02--14-19-14_Crown'
+    filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
     number_of_plots = 2
