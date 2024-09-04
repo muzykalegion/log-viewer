@@ -11,9 +11,10 @@ from matplotlib.widgets import MultiCursor
 import log_viewer
 
 
-class Widget(QWidget):
+class MainWindow(QWidget):
     def __init__(self, *args, **kwargs):
         QWidget.__init__(self, *args, **kwargs)
+        self.setWindowTitle('Log Viewer')
         self.LOG_PATH = QDir.currentPath() + '/LOGS/board/'
 
         hlay = QHBoxLayout(self)
@@ -33,10 +34,6 @@ class Widget(QWidget):
         layout.addWidget(self.canvas)
         layout.addWidget(self.label)
         hlay.addLayout(layout)
-
-        self.dirModel = QFileSystemModel()
-        self.dirModel.setRootPath(QDir.rootPath())
-        self.dirModel.setFilter(QDir.NoDotAndDotDot | QDir.AllDirs)
 
         self.fileModel = QFileSystemModel()
         self.fileModel.setFilter(QDir.NoDotAndDotDot | QDir.Files)
@@ -69,7 +66,7 @@ class Widget(QWidget):
         self.ax0.set_ylim(988, 1700)
 
         font = {'family': 'DejaVu Sans',
-                'color': 'darkblue',
+                'color': 'darkred',
                 'weight': 'normal',
                 'size': 14,
                 }
@@ -80,9 +77,6 @@ class Widget(QWidget):
         self.ax1.legend(['Altitude'])
         self.ax1.set_ylim(-0.5, 30)
 
-        # self.ax[2].plot(mtimes, pitches, ':c')
-        # self.ax[2].legend(['Pitch'])
-
         sec_loc = mdates.SecondLocator(interval=1)
         sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
 
@@ -90,17 +84,14 @@ class Widget(QWidget):
         self.ax0.xaxis.set_major_formatter(sec_formatter)
         self.ax1.xaxis.set_major_locator(sec_loc)
         self.ax1.xaxis.set_major_formatter(sec_formatter)
-        # self.ax[2].xaxis.set_major_locator(sec_loc)
-        # self.ax[2].xaxis.set_major_formatter(sec_formatter)
         plt.gcf().autofmt_xdate(rotation=90)
 
         plt.multi = MultiCursor(self.canvas, (self.ax0, self.ax1), color='r', lw=0.5, horizOn=True, vertOn=True)
-        # plt.text(cfg_line,  fontdict=font)
         self.canvas.draw()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    w = Widget()
-    w.show()
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec_())
