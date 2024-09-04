@@ -20,9 +20,12 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     day = datetime.date(2024, 5, 15)
     ZERO_ALT = 'ALT:  0.0' if isOldFile(filename) else 'ALT: 0.0'
     TIMESTAMP_FORMAT = '%HH:%MM:%SS' if isOldFile(filename) else '%H:%M:%S.%f'
+    config_line = ''
 
     with open(filename, 'r+', errors='ignore') as file:
         for num, line in enumerate(file):
+            if line.startswith('Delay='):
+                config_line = line
             if ZERO_ALT in line:
                 break
         for line in file:
@@ -61,7 +64,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     print(alt_array)
     print(throttle_array)
     print(pitch_array)
-    return time_array, alt_array, throttle_array, pitch_array
+    return time_array, alt_array, throttle_array, pitch_array, config_line
     # lines = [line.rstrip() for line in file]
     # print(lines)
     # for line in lines:
@@ -78,18 +81,25 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-09-02--16-42-09'
+    log_name = '2024-09-04--19-32-24'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
-    times, alts, throttles, pitches = parse_log(filepath)
+    times, alts, throttles, pitches, cfg_line = parse_log(filepath)
 
     number_of_plots = 2
     fig, ax = plt.subplots(number_of_plots, 1, sharex=True)
     mtimes = mdates.date2num(times)
 
+    font = {'family': 'serif',
+            'color': 'darkred',
+            'weight': 'normal',
+            'size': 12,
+            }
+
     ax[0].plot(mtimes, throttles, '-g')
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
     ax[0].set_ylim(988, 1700)
+    ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')
 
     ax[1].plot(mtimes, alts, ':b')
     ax[1].legend(['Altitude'])
@@ -108,5 +118,7 @@ if __name__ == '__main__':
     # ax[2].xaxis.set_major_locator(sec_loc)
     # ax[2].xaxis.set_major_formatter(sec_formatter)
     plt.gcf().autofmt_xdate(rotation=90)
-    plt.title(filepath, x=0.1, y=3.5)
+
+    # plt.text(cfg_line,  fontdict=font)
+    plt.text(2, 0.65, cfg_line, fontdict=font)
     plt.show()
