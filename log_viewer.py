@@ -22,7 +22,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     TIMESTAMP_FORMAT = '%HH:%MM:%SS' if isOldFile(filename) else '%H:%M:%S.%f'
 
     with open(filename, 'r+', errors='ignore') as file:
-        for line in file:
+        for num, line in enumerate(file):
             if ZERO_ALT in line:
                 break
         for line in file:
@@ -47,7 +47,10 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                         alt_array.pop()
                         break
                 if nextLine.startswith('['):
-                    chs = ast.literal_eval(nextLine)
+                    try:
+                        chs = ast.literal_eval(nextLine)
+                    except SyntaxError:
+                        print(f'!!! {num} !!!')
                     throttle_array.append(chs[2])
                     pitch_array.append(chs[1])
                 else:
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-09-02--18-22-38'
+    log_name = '2024-09-02--16-42-09'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches = parse_log(filepath)
 
