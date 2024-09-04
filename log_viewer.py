@@ -108,7 +108,7 @@ if __name__ == '__main__':
     # ax[2].plot(mtimes, pitches, ':c')
     # ax[2].legend(['Pitch'])
 
-    sec_loc = matplotlib.dates.SecondLocator(interval=1)
+    sec_loc = mdates.SecondLocator(interval=1)
     sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
 
     ax[0].xaxis.set_major_locator(sec_loc)
@@ -120,5 +120,4 @@ if __name__ == '__main__':
     plt.gcf().autofmt_xdate(rotation=90)
 
     # plt.text(cfg_line,  fontdict=font)
-    plt.text(2, 0.65, cfg_line, fontdict=font)
     plt.show()
