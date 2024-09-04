@@ -6,6 +6,7 @@ import matplotlib.dates
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.widgets import MultiCursor
 
 
 def isOldFile(filename):
@@ -22,7 +23,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     TIMESTAMP_FORMAT = '%HH:%MM:%SS' if isOldFile(filename) else '%H:%M:%S.%f'
     config_line = ''
 
-    with open(filename, 'r+', errors='ignore') as file:
+    with open(filename, 'r+', errors='ignore', encoding='utf-8') as file:
         for num, line in enumerate(file):
             if line.startswith('Delay='):
                 config_line = line
@@ -119,5 +120,6 @@ if __name__ == '__main__':
     # ax[2].xaxis.set_major_formatter(sec_formatter)
     plt.gcf().autofmt_xdate(rotation=90)
 
+    multi = MultiCursor(fig.canvas, (ax[0], ax[1]), color='r', lw=0.5, horizOn=True, vertOn=True)
     # plt.text(cfg_line,  fontdict=font)
     plt.show()

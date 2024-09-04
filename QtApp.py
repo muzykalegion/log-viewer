@@ -6,6 +6,7 @@ from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QFileSystemModel, QApplication, QVBoxLayout, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.widgets import MultiCursor
 
 import log_viewer
 
@@ -25,6 +26,7 @@ class Widget(QWidget):
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self)
         self.label = QLabel()
+        self.label.setStyleSheet("QLabel{font-size: 9pt; color: red}")
         self.label.setFixedHeight(25)
         layout = QVBoxLayout()
         layout.addWidget(self.toolbar)
@@ -65,7 +67,14 @@ class Widget(QWidget):
         self.ax0.legend(['Throttle'])
         self.ax0.set_ylim(988, 2012)
         self.ax0.set_ylim(988, 1700)
-        self.ax0.text(0.1, 1.2, cfg_line, fontsize=14, transform=self.ax0.transAxes, va='top')
+
+        font = {'family': 'DejaVu Sans',
+                'color': 'darkblue',
+                'weight': 'normal',
+                'size': 14,
+                }
+
+        self.ax0.text(0.1, 1.2, cfg_line, fontdict=font, transform=self.ax0.transAxes, va='top')
 
         self.ax1.plot(mtimes, alts, ':b')
         self.ax1.legend(['Altitude'])
@@ -85,6 +94,7 @@ class Widget(QWidget):
         # self.ax[2].xaxis.set_major_formatter(sec_formatter)
         plt.gcf().autofmt_xdate(rotation=90)
 
+        plt.multi = MultiCursor(self.canvas, (self.ax0, self.ax1), color='r', lw=0.5, horizOn=True, vertOn=True)
         # plt.text(cfg_line,  fontdict=font)
         self.canvas.draw()
 
