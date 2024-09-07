@@ -31,9 +31,11 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 break
         for line in file:
             # print(line.rstrip())
-            if 'ALT:' in line:
+            if 'ALT:' in line and 'Navigation' not in line:
                 alt_idx = line.find('ALT:')
                 time_str = line[:alt_idx].strip()
+                if time_str.startswith('ation'):
+                    continue
                 alt_str = line[alt_idx:].replace('ALT:', '').strip()
                 time = datetime.datetime.strptime(time_str, TIMESTAMP_FORMAT).time()
                 time = datetime.datetime.combine(day, time)
@@ -44,7 +46,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                     nextLine = next(file)
                 else:
                     try:
-                        for i in range(6):
+                        for i in range(7):
                             nextLine = next(file)
                     except StopIteration:
                         time_array.pop()
@@ -82,7 +84,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-09-04--19-51-01'
+    log_name = '2024-09-07--14-11-03'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, cfg_line = parse_log(filepath)
 

@@ -1,0 +1,3 @@
+Easycap format used: ImageFormat(type=<BufType.VIDEO_CAPTURE: 1>, description='YUYV 4:2:2', flags=<ImageFormatFlag.0: 0>, pixel_format=<PixelFormat.YUYV: 1448695129>)
+Initialize navigation params:
+Delay=0.01, Kp=10, Ki=0.5, Kd=0.0
