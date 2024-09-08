@@ -75,7 +75,7 @@ class MainWindow(QWidget):
 
         self.ax1.plot(mtimes, alts, ':b')
         self.ax1.legend(['Altitude'])
-        self.ax1.set_ylim(-0.5, 3.5)
+        self.ax1.set_ylim(-0.5, 20)
 
         sec_loc = mdates.SecondLocator(interval=1)
         sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
