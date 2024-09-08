@@ -3,7 +3,7 @@ import sys
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QFileSystemModel, QApplication, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QFileSystemModel, QApplication, QVBoxLayout, QLabel, QPushButton
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.widgets import MultiCursor
@@ -18,9 +18,15 @@ class MainWindow(QWidget):
         self.LOG_PATH = QDir.currentPath() + '/LOGS/board/'
 
         hlay = QHBoxLayout(self)
+        layout = QVBoxLayout()
+        # self.reloadBtn = QPushButton('Reload')
+        # self.reloadBtn.setFixedWidth(125)
+        # self.reloadBtn.clicked.connect(self.reloadList)
+        # layout.addWidget(self.reloadBtn)
         self.listview = QListView()
         self.listview.setFixedWidth(350)
-        hlay.addWidget(self.listview)
+        layout.addWidget(self.listview)
+        hlay.addLayout(layout)
 
         self.figure = plt.figure()
         self.figure, (self.ax0, self.ax1) = plt.subplots(nrows=2, sharex=True)
