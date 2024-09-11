@@ -69,7 +69,6 @@ class MainWindow(QWidget):
         self.ax0.plot(mtimes, throttles, '-g')
         self.ax0.legend(['Throttle'])
         self.ax0.set_ylim(988, 2012)
-        self.ax0.set_ylim(988, 1700)
 
         font = {'family': 'DejaVu Sans',
                 'color': 'darkred',
