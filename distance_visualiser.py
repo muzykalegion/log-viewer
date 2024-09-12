@@ -14,6 +14,40 @@ day = datetime.date(2024, 5, 15)
 # Visualize Position Data
 fig = plt.figure()
 
+def exponential_moving_average(s, n):
+    """
+    returns an n period exponential moving average for
+    the time series s
+
+    s is a list ordered from oldest (index 0) to most
+    recent (index -1)
+    n is an integer
+
+    returns a numeric array of the exponential
+    moving average
+    """
+    ema = []
+    j = 1
+
+    #get n sma first and calculate the next n period ema
+    sma = sum(s[:n]) / n
+    multiplier = 2 / float(1 + n)
+    ema.append(sma)
+
+    #EMA(current) = ( (Price(current) - EMA(prev) ) x Multiplier) + EMA(prev)
+    ema.append(( (s[n] - sma) * multiplier) + sma)
+
+    #now calculate the rest of the values
+    for i in s[n+1:]:
+        tmp = ( (i - ema[j]) * multiplier) + ema[j]
+        j = j + 1
+        ema.append(tmp)
+
+    for i in range(n - 1):
+        ema.append(ema[-1])
+
+    return ema
+
 def moving_average(arr):
     window_size = 3
 
@@ -49,8 +83,6 @@ with open('./LOGS/distance_sensor/2024-09-12--16-01-55.log','r') as f_input:
         x.append(matplotlib.dates.datestr2num(cols[0]))
         y.append(float(cols[1]))
 
-ma = moving_average(y)
-
 # naming the x axis
 plt.xlabel('Time')
 # naming the y axis
@@ -59,7 +91,9 @@ plt.ylabel('Distance, cm')
 plt.title('Sound distance')
 # plotting the points
 plt.plot(x, y)
-plt.plot(x, ma)
+plt.plot(x, moving_average(y), '-g')
+plt.plot(x, exponential_moving_average(y, 5))
+plt.legend(['Distance', 'Moving average', 'Exponential moving average'])
 # beautify the x-labels
 plt.gcf().autofmt_xdate(rotation=90)
 # function to show the plot
