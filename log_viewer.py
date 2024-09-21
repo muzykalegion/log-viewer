@@ -24,13 +24,17 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     config_line = ''
 
     with open(filename, 'r+', errors='ignore', encoding='utf-8') as file:
+        # nnum = 0
         for num, line in enumerate(file):
+            # nnum = num
             if line.startswith('Delay='):
                 config_line = line
             if ZERO_ALT in line:
                 break
-        for line in file:
+
+        for num, line in enumerate(file):
             # print(line.rstrip())
+            # print(nnum + num)
             if 'ALT:' in line and 'Navigation' not in line:
                 alt_idx = line.find('ALT:')
                 time_str = line[:alt_idx].strip()
@@ -84,7 +88,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-09-21--15-11-34'
+    log_name = '2024-09-21--16-33-25'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, cfg_line = parse_log(filepath)
 
