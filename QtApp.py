@@ -43,7 +43,7 @@ class MainWindow(QWidget):
 
         self.fileModel = QFileSystemModel()
         self.fileModel.setFilter(QDir.NoDotAndDotDot | QDir.Files)
-        self.fileModel.sort(2, Qt.SortOrder.DescendingOrder)
+        # self.fileModel.sort(2, Qt.SortOrder.DescendingOrder)
 
         self.listview.setModel(self.fileModel)
         self.listview.setRootIndex(self.fileModel.setRootPath(self.LOG_PATH))
@@ -81,7 +81,7 @@ class MainWindow(QWidget):
 
         self.ax1.plot(mtimes, alts, ':b')
         self.ax1.legend(['Altitude'])
-        self.ax1.set_ylim(-0.5, 20)
+        self.ax1.set_ylim(-0.5, 30)
 
         sec_loc = mdates.SecondLocator(interval=1)
         sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
