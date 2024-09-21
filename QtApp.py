@@ -43,6 +43,7 @@ class MainWindow(QWidget):
 
         self.fileModel = QFileSystemModel()
         self.fileModel.setFilter(QDir.NoDotAndDotDot | QDir.Files)
+        self.fileModel.sort(2, Qt.SortOrder.DescendingOrder)
 
         self.listview.setModel(self.fileModel)
         self.listview.setRootIndex(self.fileModel.setRootPath(self.LOG_PATH))
