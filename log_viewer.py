@@ -88,7 +88,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-09-22--17-27-46'
+    log_name = '2024-09-22--18-11-30 - lpf100_nofix'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, cfg_line = parse_log(filepath)
 
