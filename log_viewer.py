@@ -107,7 +107,7 @@ if __name__ == '__main__':
     ax[0].set_ylim(988, 2012)
     ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')
 
-    ax[1].plot(mtimes, alts, ':b')
+    ax[1].scatter(mtimes, alts)
     ax[1].legend(['Altitude'])
     ax[1].set_ylim(-0.5, 20)
 
