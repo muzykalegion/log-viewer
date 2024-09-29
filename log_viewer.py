@@ -102,7 +102,7 @@ if __name__ == '__main__':
             'size': 12,
             }
 
-    ax[0].plot(mtimes, throttles, '-g')
+    ax[0].scatter(mtimes, throttles)
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
     ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')

@@ -67,7 +67,7 @@ class MainWindow(QWidget):
         self.ax0 = self.figure.add_subplot(2, 1, 1)
         self.ax1 = self.figure.add_subplot(2, 1, 2, sharex=self.ax0)
         mtimes = mdates.date2num(times)
-        self.ax0.plot(mtimes, throttles, '-g')
+        self.ax0.scatter(mtimes, throttles,color='green', s=2)
         self.ax0.legend(['Throttle'])
         self.ax0.set_ylim(988, 2012)
 
@@ -79,7 +79,7 @@ class MainWindow(QWidget):
 
         self.ax0.text(0.1, 1.2, cfg_line, fontdict=font, transform=self.ax0.transAxes, va='top')
 
-        self.ax1.plot(mtimes, alts, ':b')
+        self.ax1.scatter(mtimes, alts, s=2)
         self.ax1.legend(['Altitude'])
         self.ax1.set_ylim(-0.5, 30)
 
