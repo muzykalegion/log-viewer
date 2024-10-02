@@ -1,4 +1,5 @@
 import sys
+import traceback
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -57,44 +58,46 @@ class MainWindow(QWidget):
         self.figure.clear()
         self.label.setVisible(False)
 
-        times, alts, throttles, pitches, cfg_line = log_viewer.parse_log(filename=self.LOG_PATH + log_name)
+        try:
+            times, alts, throttles, pitches, cfg_line = log_viewer.parse_log(filename=self.LOG_PATH + log_name)
 
-        if len(times) == 0:
-            self.label.setText('Empty log!')
-            self.label.setVisible(True)
-            return
+            if len(times) == 0:
+                self.label.setText('Empty log!')
+                self.label.setVisible(True)
+                return
 
-        self.ax0 = self.figure.add_subplot(2, 1, 1)
-        self.ax1 = self.figure.add_subplot(2, 1, 2, sharex=self.ax0)
-        mtimes = mdates.date2num(times)
-        self.ax0.scatter(mtimes, throttles,color='green', s=2)
-        self.ax0.legend(['Throttle'])
-        self.ax0.set_ylim(988, 2012)
+            self.ax0 = self.figure.add_subplot(2, 1, 1)
+            self.ax1 = self.figure.add_subplot(2, 1, 2, sharex=self.ax0)
+            mtimes = mdates.date2num(times)
+            self.ax0.scatter(mtimes, throttles,color='green', s=2)
+            self.ax0.legend(['Throttle'])
+            self.ax0.set_ylim(988, 2012)
 
-        font = {'family': 'DejaVu Sans',
-                'color': 'darkred',
-                'weight': 'normal',
-                'size': 14,
-                }
+            font = {'family': 'DejaVu Sans',
+                    'color': 'darkred',
+                    'weight': 'normal',
+                    'size': 14,
+                    }
 
-        self.ax0.text(0.1, 1.2, cfg_line, fontdict=font, transform=self.ax0.transAxes, va='top')
+            self.ax0.text(0.1, 1.2, cfg_line, fontdict=font, transform=self.ax0.transAxes, va='top')
 
-        self.ax1.scatter(mtimes, alts, s=2)
-        self.ax1.legend(['Altitude'])
-        self.ax1.set_ylim(-0.5, 30)
+            self.ax1.scatter(mtimes, alts, s=2)
+            self.ax1.legend(['Altitude'])
+            self.ax1.set_ylim(-0.5, 30)
 
-        sec_loc = mdates.SecondLocator(interval=1)
-        sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
+            sec_loc = mdates.SecondLocator(interval=1)
+            sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
 
-        self.ax0.xaxis.set_major_locator(sec_loc)
-        self.ax0.xaxis.set_major_formatter(sec_formatter)
-        self.ax1.xaxis.set_major_locator(sec_loc)
-        self.ax1.xaxis.set_major_formatter(sec_formatter)
-        plt.gcf().autofmt_xdate(rotation=90)
+            self.ax0.xaxis.set_major_locator(sec_loc)
+            self.ax0.xaxis.set_major_formatter(sec_formatter)
+            self.ax1.xaxis.set_major_locator(sec_loc)
+            self.ax1.xaxis.set_major_formatter(sec_formatter)
+            plt.gcf().autofmt_xdate(rotation=90)
 
-        plt.multi = MultiCursor(self.canvas, (self.ax0, self.ax1), color='r', lw=0.5, horizOn=True, vertOn=True)
-        self.canvas.draw()
-
+            plt.multi = MultiCursor(self.canvas, (self.ax0, self.ax1), color='r', lw=0.5, horizOn=True, vertOn=True)
+            self.canvas.draw()
+        except ValueError:
+            print(traceback.format_exc())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -88,7 +88,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-10-01--16-54-10'
+    log_name = '2024-10-02--14-10-28'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, cfg_line = parse_log(filepath)
 
@@ -102,12 +102,12 @@ if __name__ == '__main__':
             'size': 12,
             }
 
-    ax[0].scatter(mtimes, throttles)
+    ax[0].scatter(mtimes, throttles, s=2, c='green')
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
     ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')
 
-    ax[1].scatter(mtimes, alts)
+    ax[1].scatter(mtimes, alts, s=2, c='blue')
     ax[1].legend(['Altitude'])
     ax[1].set_ylim(-0.5, 20)
 
