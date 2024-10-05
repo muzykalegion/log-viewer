@@ -83,7 +83,7 @@ class MainWindow(QWidget):
 
             self.ax1.scatter(mtimes, alts, s=2)
             self.ax1.legend(['Altitude'])
-            self.ax1.set_ylim(-0.5, 1.5)
+            self.ax1.set_ylim(-0.5, 3.0)
 
             sec_loc = mdates.SecondLocator(interval=1)
             sec_formatter = mdates.DateFormatter('%H:%M:%S.%f')
