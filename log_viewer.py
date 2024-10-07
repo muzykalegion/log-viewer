@@ -18,6 +18,7 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
     alt_array = []
     throttle_array = []
     pitch_array = []
+    accel_array = []
     day = datetime.date(2024, 5, 15)
     ZERO_ALT = 'ALT:  0.0' if isOldFile(filename) else 'ALT: 0.0'
     TIMESTAMP_FORMAT = '%HH:%MM:%SS' if isOldFile(filename) else '%H:%M:%S.%f'
@@ -35,27 +36,26 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
         for num, line in enumerate(file):
             # print(line.rstrip())
             # print(nnum + num)
-            if 'ALT:' in line and 'Navigation' not in line:
-                alt_idx = line.find('ALT:')
+            if 'Navigation got ALT:' in line:
+                alt_idx = line.find('Navigation got ALT:')
                 time_str = line[:alt_idx].strip()
-                if time_str.startswith('ation'):
-                    continue
-                alt_str = line[alt_idx:].replace('ALT:', '').strip()
+                alt_str = line[alt_idx:].replace('Navigation got ALT:', '').strip()
                 time = datetime.datetime.strptime(time_str, TIMESTAMP_FORMAT).time()
                 time = datetime.datetime.combine(day, time)
                 alt = float(alt_str)
                 time_array.append(time)
                 alt_array.append(alt)
-                if isOldFile(filename):
-                    nextLine = next(file)
-                else:
-                    try:
-                        for i in range(7):
-                            nextLine = next(file)
-                    except StopIteration:
-                        time_array.pop()
-                        alt_array.pop()
-                        break
+                # if isOldFile(filename):
+                #     nextLine = next(file)
+                # else:
+                #     try:
+                #         for i in range(7):
+                #             nextLine = next(file)
+                #     except StopIteration:
+                #         time_array.pop()
+                #         alt_array.pop()
+                #         break
+                nextLine = next(file)
                 if nextLine.startswith('['):
                     try:
                         chs = ast.literal_eval(nextLine)
@@ -66,12 +66,19 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 else:
                     time_array.pop()
                     alt_array.pop()
+                while 'ACC:' not in nextLine:
+                    nextLine = next(file)
+                acc_idx = nextLine.find('ACC:')
+                acc_str = nextLine[acc_idx:].replace('ACC:', '').strip()
+                acc = ast.literal_eval(acc_str)
+                accel_array.append(float(acc[2] / 512))  # z axis
 
     print(time_array)
     print(alt_array)
     print(throttle_array)
     print(pitch_array)
-    return time_array, alt_array, throttle_array, pitch_array, config_line
+    print(accel_array)
+    return time_array, alt_array, throttle_array, pitch_array, accel_array, config_line
     # lines = [line.rstrip() for line in file]
     # print(lines)
     # for line in lines:
@@ -88,9 +95,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-10-02--14-10-28'
+    log_name = '2024-10-06--15-53-37'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
-    times, alts, throttles, pitches, cfg_line = parse_log(filepath)
+    times, alts, throttles, pitches, acc_zs, cfg_line = parse_log(filepath)
 
     number_of_plots = 2
     fig, ax = plt.subplots(number_of_plots, 1, sharex=True)
@@ -102,13 +109,14 @@ if __name__ == '__main__':
             'size': 12,
             }
 
-    ax[0].scatter(mtimes, throttles, s=2, c='green')
+    ax[0].scatter(mtimes, throttles, s=1, c='green')
     ax[0].legend(['Throttle'])
     ax[0].set_ylim(988, 2012)
     ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')
 
-    ax[1].scatter(mtimes, alts, s=2, c='blue')
-    ax[1].legend(['Altitude'])
+    ax[1].scatter(mtimes, alts, s=1, c='blue')
+    ax[1].scatter(mtimes, acc_zs, s=1, c='brown')
+    ax[1].legend(['Altitude', 'Accelerometer'])
     ax[1].set_ylim(-0.5, 20)
 
     # ax[2].plot(mtimes, pitches, ':c')
