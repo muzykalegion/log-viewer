@@ -97,7 +97,7 @@ class MainWindow(QWidget):
 
             plt.multi = MultiCursor(self.canvas, (self.ax0, self.ax1), color='r', lw=0.5, horizOn=True, vertOn=True)
             self.canvas.draw()
-        except ValueError:
+        except (ValueError, SyntaxError):
             print(traceback.format_exc())
 
 

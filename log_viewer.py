@@ -45,16 +45,6 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 alt = float(alt_str)
                 time_array.append(time)
                 alt_array.append(alt)
-                # if isOldFile(filename):
-                #     nextLine = next(file)
-                # else:
-                #     try:
-                #         for i in range(7):
-                #             nextLine = next(file)
-                #     except StopIteration:
-                #         time_array.pop()
-                #         alt_array.pop()
-                #         break
                 nextLine = next(file)
                 if nextLine.startswith('['):
                     try:
@@ -73,29 +63,19 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 acc = ast.literal_eval(acc_str)
                 accel_array.append(float(acc[2] / 512))  # z axis
 
-    print(time_array)
-    print(alt_array)
-    print(throttle_array)
-    print(pitch_array)
-    print(accel_array)
+    print(len(time_array), time_array)
+    print(len(alt_array),alt_array)
+    print(len(throttle_array),throttle_array)
+    print(len(pitch_array), pitch_array)
+    print(len(accel_array),accel_array)
     return time_array, alt_array, throttle_array, pitch_array, accel_array, config_line
-    # lines = [line.rstrip() for line in file]
-    # print(lines)
-    # for line in lines:
-
-
-def curve(length):
-    TAKEOFF_LIST = np.zeros(10)  # Creating the take off curve
-    for t in range(len(TAKEOFF_LIST)):
-        TAKEOFF_LIST[t] = (1 - (1 / np.exp(t)))  # act like a cap-charge shape
-    return TAKEOFF_LIST.tolist()
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-10-06--15-53-37'
+    log_name = '2024-10-10--21-49-18'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, acc_zs, cfg_line = parse_log(filepath)
 
