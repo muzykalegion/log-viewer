@@ -56,18 +56,18 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 else:
                     time_array.pop()
                     alt_array.pop()
-                while 'ACC:' not in nextLine:
-                    nextLine = next(file)
-                acc_idx = nextLine.find('ACC:')
-                acc_str = nextLine[acc_idx:].replace('ACC:', '').strip()
-                acc = ast.literal_eval(acc_str)
-                accel_array.append(float(acc[2] / 512))  # z axis
+                # while 'ACC:' not in nextLine:
+                #     nextLine = next(file)
+                # acc_idx = nextLine.find('ACC:')
+                # acc_str = nextLine[acc_idx:].replace('ACC:', '').strip()
+                # acc = ast.literal_eval(acc_str)
+                # accel_array.append(float(acc[2] / 512))  # z axis
 
     print(len(time_array), time_array)
-    print(len(alt_array),alt_array)
-    print(len(throttle_array),throttle_array)
+    print(len(alt_array), alt_array)
+    print(len(throttle_array), throttle_array)
     print(len(pitch_array), pitch_array)
-    print(len(accel_array),accel_array)
+    print(len(accel_array), accel_array)
     return time_array, alt_array, throttle_array, pitch_array, accel_array, config_line
 
 
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-10-10--21-49-18'
+    log_name = '2024-10-18--16-49-19 - 0.25'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, acc_zs, cfg_line = parse_log(filepath)
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     ax[0].text(0.1, 1.2, cfg_line, fontsize=14, transform=ax[0].transAxes, va='top')
 
     ax[1].scatter(mtimes, alts, s=1, c='blue')
-    ax[1].scatter(mtimes, acc_zs, s=1, c='brown')
+    # ax[1].scatter(mtimes, acc_zs, s=1, c='brown')
     ax[1].legend(['Altitude', 'Accelerometer'])
     ax[1].set_ylim(-0.5, 20)
 
