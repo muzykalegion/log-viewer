@@ -1,0 +1,5 @@
+Tx/Rx/VTX Power (25-Max)
+Test w/o propellers 1m-2m-FSCut-1m
+Alt hold throttle auto adjustment
+Test on stand
+Manual classic flight test
