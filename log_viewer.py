@@ -47,10 +47,11 @@ def parse_log(filename='LOGS/27.05.24/1.out'):
                 alt_array.append(alt)
                 nextLine = next(file)
                 if nextLine.startswith('['):
+                    nextLine = nextLine.split("|")[0].strip()
                     try:
                         chs = ast.literal_eval(nextLine)
                     except SyntaxError:
-                        print(f'!!! {num} !!!')
+                        print(f'Failed parsing file at line {num} !!!')
                     throttle_array.append(chs[2])
                     pitch_array.append(chs[1])
                 else:
@@ -75,7 +76,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--filepath', help='Relative path fo a file, e.g. LOGS/27.05.24/1.log')
     args = parser.parse_args()
-    log_name = '2024-10-29--12-33-04'
+    log_name = '2025-04-29--13-18-48'
     filepath = args.filepath if args.filepath else f'LOGS/board/{log_name}.log'
     times, alts, throttles, pitches, acc_zs, cfg_line = parse_log(filepath)
 
